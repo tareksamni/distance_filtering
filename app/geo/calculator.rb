@@ -5,6 +5,9 @@ module Geo
     EARTH_RADIUS = 6371.0 # in km
 
     def initialize(point1, point2)
+      unless valid_params?(point1, point2)
+        raise ArgumentError, 'Only Geo::Coordinate are allowed'
+      end
       @point1 = point1
       @point2 = point2
     end
@@ -39,10 +42,21 @@ module Geo
       point2_lat,
       point2_lon
     )
-
+      unless point1_lat.is_a?(Numeric) &&
+             point1_lon.is_a?(Numeric) &&
+             point2_lat.is_a?(Numeric) &&
+             point2_lon.is_a?(Numeric)
+        raise ArgumentError, 'Only numerics are allowed'
+      end
       point1 = Coordinate.new(point1_lat, point1_lon)
       point2 = Coordinate.new(point2_lat, point2_lon)
       new(point1, point2)
+    end
+
+    private
+
+    def valid_params?(point1, point2)
+      point1.is_a?(Geo::Coordinate) && point2.is_a?(Geo::Coordinate)
     end
   end
 end

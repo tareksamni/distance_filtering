@@ -1,28 +1,40 @@
 # frozen_string_literal: true
 
-require './autoload'
 RSpec.describe Geo::Coordinate do
-  let(:coordinate) { Geo::Coordinate.new(52.986375, -6.043701) }
-  let(:invalid_lat_coordinate) { Geo::Coordinate.new('', -6.043701) }
-  let(:invalid_lon_coordinate) { Geo::Coordinate.new(52.986375, '') }
-  let(:invalid_coordinate) { Geo::Coordinate.new('a', 'b') }
+  let(:coordinate) { Geo::Coordinate.new(lat, lon) }
 
   describe '#initialize' do
-    it 'should assign latitude and longitude if input is numeric' do
-      expect(coordinate.lat).to be(52.986375)
-      expect(coordinate.lon).to be(-6.043701)
+    context 'input(lat, lon) is numeric' do
+      let(:lat) { 52.986375 }
+      let(:lon) { -6.043701 }
+      it 'should assign latitude and longitude' do
+        expect(coordinate.lat).to be(lat)
+        expect(coordinate.lon).to be(lon)
+      end
     end
 
-    it 'should raise ArgumentError expcetion if input is not numeric' do
-      expect { invalid_coordinate }.to raise_error(ArgumentError)
+    context 'input is not numeric' do
+      let(:lat) { 'a' }
+      let(:lon) { 'b' }
+      it 'should raise ArgumentError expcetion' do
+        expect { coordinate }.to raise_error(ArgumentError)
+      end
     end
 
-    it 'should raise ArgumentError expcetion if latitude is not numeric' do
-      expect { invalid_lat_coordinate }.to raise_error(ArgumentError)
+    context 'latitude is not numeric' do
+      let(:lat) { 'a' }
+      let(:lon) { -6.043701 }
+      it 'should raise ArgumentError expcetion' do
+        expect { coordinate }.to raise_error(ArgumentError)
+      end
     end
 
-    it 'should raise ArgumentError expcetion if longitude is not numeric' do
-      expect { invalid_lon_coordinate }.to raise_error(ArgumentError)
+    context 'longitude is not numeric' do
+      let(:lat) { 52.986375 }
+      let(:lon) { 'b' }
+      it 'should raise ArgumentError expcetion' do
+        expect { coordinate }.to raise_error(ArgumentError)
+      end
     end
   end
 end
