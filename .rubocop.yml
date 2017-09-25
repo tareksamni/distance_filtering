@@ -7,3 +7,11 @@ Style/Documentation:
 
 Metrics/BlockLength:
   Enabled: false
+
+Metrics/AbcSize:
+  Exclude:
+    - 'app/geo/calculator.rb'
+
+Metrics/LineLength:
+  Exclude:
+    - 'app/geo/calculator.rb'

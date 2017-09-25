@@ -12,7 +12,6 @@ module Geo
       @point2 = point2
     end
 
-    # rubocop:disable Metrics/AbcSize
     def distance
       # From: https://github.com/alexreisner/geocoder/blob/b5af9506a3462b57af0cecef597d2569e204c967/lib/geocoder/calculations.rb#L85
 
@@ -27,14 +26,11 @@ module Geo
       sin_dlat = Math.sin(dlat / 2)
       sin_dlon = Math.sin(dlon / 2)
 
-      # rubocop:disable Metrics/LineLength
       a = sin_dlat**2 + Math.cos(rad_point1[0]) * sin_dlon**2 * Math.cos(rad_point2[0])
-      # rubocop:enable Metrics/LineLength
 
       c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
       c * EARTH_RADIUS
     end
-    # rubocop:enable Metrics/AbcSize
 
     def self.from_degree_coordinates(
       point1_lat,
